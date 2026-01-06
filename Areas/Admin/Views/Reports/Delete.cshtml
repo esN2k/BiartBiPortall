@@ -1,0 +1,40 @@
+@model BiartBiPortal.Models.Report
+@{
+    ViewData["Title"] = "Rapor Sil";
+}
+<div class="row mb-3">
+    <div class="col"><h1 class="h3 fw-semibold text-danger">Rapor Sil</h1></div>
+</div>
+<div class="alert alert-warning">
+    <h5 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> Dikkat!</h5>
+    <p>Bu raporu silmek üzeresiniz. Bu işlem geri alınamaz.</p>
+</div>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5>@Model.Title</h5>
+        <hr>
+        <dl class="row">
+            <dt class="col-sm-3">Başlık</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+            <dt class="col-sm-3">Kategoriler</dt>
+            <dd class="col-sm-9">
+                @if (Model.ReportCategories.Any())
+                {
+                    @foreach (var rc in Model.ReportCategories)
+                    {
+                        <span class="badge bg-secondary me-1">@rc.Category.Name</span>
+                    }
+                }
+            </dd>
+            <dt class="col-sm-3">Oluşturulma</dt>
+            <dd class="col-sm-9">@Model.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+        </dl>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Evet, Sil</button>
+                <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-x-circle"></i> İptal</a>
+            </div>
+        </form>
+    </div>
+</div>

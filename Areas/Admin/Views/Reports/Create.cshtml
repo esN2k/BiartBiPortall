@@ -1,0 +1,98 @@
+@model BiartBiPortal.Models.Report
+
+@{
+    ViewData["Title"] = "Yeni Rapor";
+    var categories = ViewBag.Categories as List<BiartBiPortal.Models.Category>;
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <h1 class="h3 fw-semibold">Yeni Rapor Oluştur</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Raporlar</a></li>
+                <li class="breadcrumb-item active">Yeni Rapor</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Summary" class="form-label"></label>
+                        <textarea asp-for="Summary" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Content" class="form-label"></label>
+                        <textarea asp-for="Content" class="form-control" rows="8"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Kategoriler (N-N İlişki)</label>
+                        @if (categories != null && categories.Any())
+                        {
+                            <div class="border rounded p-3">
+                                @foreach (var category in categories)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="selectedCategories" value="@category.Id" id="cat_@category.Id">
+                                        <label class="form-check-label" for="cat_@category.Id">
+                                            @category.Name
+                                            @if (!string.IsNullOrEmpty(category.Description))
+                                            {
+                                                <small class="text-muted">- @category.Description</small>
+                                            }
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <div class="form-text">Birden fazla kategori seçebilirsiniz.</div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                Henüz kategori eklenmemiş. <a asp-area="Admin" asp-controller="Categories" asp-action="Create">İlk kategoriyi ekle</a>
+                            </div>
+                        }
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input asp-for="IsPublished" class="form-check-input" />
+                            <label asp-for="IsPublished" class="form-check-label"></label>
+                        </div>
+                        <div class="form-text">Taslak olarak saklamak için işaretsiz bırakın.</div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Kaydet
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

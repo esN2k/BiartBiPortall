@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="bg-light border rounded-3 p-4 p-md-5 mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+            <h1 class="display-6 fw-semibold">Biart Mini İş Zekası Portalı</h1>
+            <p class="lead text-muted">Raporlarınızı kategorilere ayırın, yönetin ve kolayca paylaşın. Tek bir panelden tüm raporlarınıza erişin.</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-primary" asp-controller="Reports" asp-action="Index">Raporlar</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Yönetim Paneli</a>
+                }
+                <a class="btn btn-outline-secondary" asp-action="Privacy">Gizlilik</a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="p-3 bg-white border rounded-3 shadow-sm">
+                <div class="small text-muted">Hızlı Bakış</div>
+                <div class="fw-semibold">Rapor Yönetim Sistemi</div>
+                <div class="text-muted small mt-2">Kategorilere göre düzenlenmiş raporlar ve kolay yönetim.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Reports</h5>
+                <p class="card-text text-muted">Rapor ekleme, listeleme ve filtreleme ekrani.</p>
+                <a class="btn btn-sm btn-outline-primary" href="#" title="Reports yakinda">Go to Reports</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Categories</h5>
+                <p class="card-text text-muted">Kategori yonetimi ve rapor esleme akisi.</p>
+                <a class="btn btn-sm btn-outline-primary" href="#" title="Categories yakinda">Go to Categories</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Excel Export</h5>
+                <p class="card-text text-muted">Raporlari disari aktarip paylasim yapmak.</p>
+                <a class="btn btn-sm btn-outline-primary" href="#" title="Excel export yakinda">Export Overview</a>
+            </div>
+        </div>
+    </div>
+</div>

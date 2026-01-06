@@ -1,0 +1,74 @@
+@model BiartBiPortal.Models.Category
+
+@{
+    ViewData["Title"] = "Kategori Sil";
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <h1 class="h3 fw-semibold text-danger">Kategori Sil</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Kategoriler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sil</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="alert alert-warning" role="alert">
+            <h5 class="alert-heading">
+                <i class="bi bi-exclamation-triangle"></i> Dikkat!
+            </h5>
+            <p>Bu kategoriyi silmek üzeresiniz. Bu işlem geri alınamaz.</p>
+            @if (Model.ReportCategories.Any())
+            {
+                <hr>
+                <p class="mb-0">
+                    <strong>Uyarı:</strong> Bu kategoriye bağlı <strong>@Model.ReportCategories.Count adet rapor</strong> bulunmaktadır. 
+                    Kategori silindiğinde bu ilişkiler de kaldırılacaktır, ancak raporlar silinmeyecektir.
+                </p>
+            }
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <hr>
+                <dl class="row">
+                    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                    
+                    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
+                    <dd class="col-sm-9">
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            @Model.Description
+                        }
+                        else
+                        {
+                            <span class="text-muted">Açıklama girilmemiş</span>
+                        }
+                    </dd>
+                    
+                    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreatedDate)</dt>
+                    <dd class="col-sm-9">@Model.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+                </dl>
+                
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Evet, Sil
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

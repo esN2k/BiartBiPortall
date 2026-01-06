@@ -1,0 +1,83 @@
+@model BiartBiPortal.Models.Report
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Raporlar</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h1 class="h3 fw-semibold mb-2">@Model.Title</h1>
+        
+        @if (Model.ReportCategories.Any())
+        {
+            <div class="mb-2">
+                @foreach (var rc in Model.ReportCategories)
+                {
+                    <span class="badge bg-secondary me-1">@rc.Category.Name</span>
+                }
+            </div>
+        }
+        
+        <div class="text-muted small">
+            <i class="bi bi-calendar"></i> Yayınlanma: @Model.PublishedDate?.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
+            @if (Model.CreatedByUser != null)
+            {
+                <span class="ms-3">
+                    <i class="bi bi-person"></i> Oluşturan: @Model.CreatedByUser.UserName
+                </span>
+            }
+        </div>
+    </div>
+    
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model.Summary))
+        {
+            <div class="alert alert-light border">
+                <strong>Özet:</strong>
+                <p class="mb-0 mt-2">@Model.Summary</p>
+            </div>
+        }
+        
+        <div class="mt-4">
+            <h5>İçerik</h5>
+            <hr>
+            <div style="white-space: pre-wrap;">@Model.Content</div>
+        </div>
+    </div>
+    
+    <div class="card-footer bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Listeye Dön
+            </a>
+            
+            <div class="text-muted small">
+                @if (Model.UpdatedDate.HasValue)
+                {
+                    <span>Son Güncelleme: @Model.UpdatedDate.Value.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                }
+                else
+                {
+                    <span>Oluşturulma: @Model.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-primary">
+        <i class="bi bi-list"></i> Tüm Raporlar
+    </a>
+</div>

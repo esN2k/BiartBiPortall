@@ -1,0 +1,74 @@
+@model BiartBiPortal.Models.Category
+
+@{
+    ViewData["Title"] = "Yeni Kategori";
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <h1 class="h3 fw-semibold">Yeni Kategori Oluştur</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Kategoriler</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Yeni Kategori</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Örn: Pazarlama, Satış, Finans" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Bu kategori hakkında kısa bir açıklama..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="form-text">Opsiyonel - Kategorinin amacını açıklayın.</div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Kaydet
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="card-title">Kategori Hakkında</h6>
+                <p class="card-text small text-muted">
+                    Kategoriler, raporları organize etmek için kullanılır. 
+                    Her rapor birden fazla kategoriye atanabilir.
+                </p>
+                <hr>
+                <h6 class="card-title">İpuçları</h6>
+                <ul class="small text-muted">
+                    <li>Kısa ve açıklayıcı isimler kullanın</li>
+                    <li>Benzer kategorileri birleştirin</li>
+                    <li>Açıklama alanı opsiyoneldir</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
